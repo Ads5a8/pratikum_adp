@@ -27,7 +27,7 @@ harga = int(input("masukkan harga barang          = "))
 bayar = harga *  jumlah 
 
 if bayar < 1000000 :
-    print("pembeli tidak mendapat diskon")
+    diskon = 0/100
 elif 1000000 < bayar < 1500000 :
     diskon = 10/100
 else :
