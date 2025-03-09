@@ -38,8 +38,8 @@ total_bayar = bayar - potongan_harga
 
 #menampilkan detail pembayaran
 print("harga total                    =", bayar)
-print("potongan harga                 = ", potongan_harga)
-print("total yang harus dibayar       = ", total_bayar)
+print("potongan harga                 =", potongan_harga)
+print("total yang harus dibayar       =", total_bayar)
 
 print("=====================================================================================")
 
