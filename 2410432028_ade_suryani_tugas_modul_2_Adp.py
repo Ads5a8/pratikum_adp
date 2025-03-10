@@ -23,7 +23,7 @@ print("=========================================================================
 
 barang = str(input("barang yang dibeli             = "))
 jumlah = int(input("jumlah barang yang dibeli      = "))
-harga = float(input("masukkan harga barang         = "))
+harga = float(input("masukkan harga barang          = "))
 bayar = harga *  jumlah 
 
 if bayar < 1000000 :
