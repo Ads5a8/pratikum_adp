@@ -11,7 +11,7 @@ estimasi_luas_daerah = 0
 
 for i in range(n) :
     xi = 1 + i*dx
-    estimasi_luas_daerah += (xi**2 + 2*xi) * dx
+    estimasi_luas_daerah += (xi**2 + 2*xi) * dx  #f(xi) = xi^2 + 2xi
 
 print("luas daerah dari fungsi x^2 + 2x dengan batas x = 1 dan x = 3 dan jumlah partisi n =", (n), "adalah", estimasi_luas_daerah)
 
