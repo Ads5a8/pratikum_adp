@@ -23,12 +23,11 @@ def kue():
         time.sleep(0.3)
 
 def ucapan() :
-    time.sleep(0.5)
     cprint("    Selamat Ulang Tahun !    ", "red", "on_white")
     time.sleep(1)
     cprint("Semoga kamu bahagia selalu :)","red", "on_white")
 
 
 kue()
-time.sleep(0.2)
+time.sleep(0.5)
 ucapan()
