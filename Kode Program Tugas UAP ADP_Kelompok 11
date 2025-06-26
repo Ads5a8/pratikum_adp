@@ -1,0 +1,138 @@
+import time
+import os
+from datetime import datetime
+from termcolor import colored, cprint
+
+file_nama = "buku_kas.txt"
+file_nama_user = "user.txt"
+
+def animasi(teks) :
+    for karakter in teks:
+        print(karakter, end='', flush=True)
+        time.sleep(0.05)
+    print()
+
+def ambil_nama():
+    file = open(file_nama_user, 'a+')
+    file.seek(0)  
+    isi = file.read().strip()
+
+    if isi:
+        nama = isi
+    else:
+        os.system('cls')
+        nama = input("Masukkan nama: ")
+        file.write(nama)
+    file.close()
+    return nama
+
+
+nama = ambil_nama()
+os.system('cls')
+print(f"Halo {nama}! Selamat datang di Bukas!")
+time.sleep(1)
+animasi("Buku Kas sederhana ala A&D :)")
+time.sleep(3)
+
+def simpan_ke_file(data):
+    with open(file_nama, 'w') as file:
+        for t in data:
+            baris = f"{t['tanggal']:<20} | {t['jenis']:<10} | {t['keterangan']:<15} | {t['jumlah']:<15}\n"
+            file.write(baris)
+    os.system('cls')
+    animasi("📦 Menyimpan data...")
+
+def baca_dari_file():
+    data = []
+    with open(file_nama, 'r') as file:
+        for baris in file:
+            parts = baris.strip().split('|')
+            if len(parts) == 4:
+                data.append({
+                    'tanggal': parts[0],
+                    'jenis': parts[1],
+                    'keterangan': parts[2],
+                    'jumlah': parts[3]
+                })
+    return data
+
+def tambah_transaksi(transaksi_list):
+    jenis = input("\nJenis transaksi(masuk/keluar): ").lower()
+    if jenis not in ['masuk', 'keluar']:
+        print("Jenis tidak valid.")
+        return
+
+    keterangan = input("Keterangan: ")
+    jumlah = int(input("Jumlah (harus berupa angka): "))
+    
+
+    transaksi = {
+        'tanggal': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'jenis': jenis,
+        'keterangan': keterangan,
+        'jumlah': jumlah
+    }
+    transaksi_list.append(transaksi)
+    simpan_ke_file(transaksi_list)
+    time.sleep(3)
+    os.system('cls')
+    print("✅ Transaksi berhasil ditambahkan!")
+
+def tampilkan_transaksi(transaksi_list):
+    os.system('cls')
+    animasi("Harap Tunggu Sebentar...")
+    time.sleep(3)
+    os.system("cls")
+    if not transaksi_list:
+        print("Belum ada transaksi.")
+        return
+    
+    cprint(f"{'Tanggal':<24} {'Jenis':<14} {'Keterangan':<14} {'Jumlah':<15}", "white", "on_blue")
+    print("-" * 68)
+    for t in transaksi_list:
+        
+        jumlah_rp = f"Rp. {t['jumlah']}"
+        print(f"{t['tanggal']:<25}{t['jenis']:<15}{t['keterangan']:<15}{jumlah_rp:<15}")
+
+def hitung_saldo(transaksi_list):
+    os.system('cls')
+    animasi("Saldo sedang dihitung...")
+    time.sleep(3)
+
+    array_2d = [[t['jenis'], t['jumlah']] for t in transaksi_list]
+
+    saldo = 0
+    for indeks in array_2d :
+        if indeks[0] == 'masuk' :
+            saldo += indeks[1]
+        else :
+            saldo -= indeks[1]
+
+    os.system('cls')
+    print(f"\n💰Total saldo saat ini: Rp{saldo:,}")
+
+def menu():
+    transaksi = baca_dari_file()
+    os.system('cls')
+    while True:
+        print("\n===== MENU UTAMA =====")
+        print("1. Tambah Transaksi")
+        print("2. Lihat Semua Transaksi")
+        print("3. Hitung Saldo")
+        print("4. Keluar")
+
+        pilihan = input("Pilih menu (1-4): ")
+        if pilihan == '1':
+            tambah_transaksi(transaksi)
+        elif pilihan == '2':
+            tampilkan_transaksi(transaksi)
+        elif pilihan == '3':
+            hitung_saldo(transaksi)
+        elif pilihan == '4':
+            os.system('cls')
+            animasi("👋 Terima kasih telah menggunakan BuKas!")
+            break
+        else:
+            print("Pilihan tidak valid.")
+
+menu()
